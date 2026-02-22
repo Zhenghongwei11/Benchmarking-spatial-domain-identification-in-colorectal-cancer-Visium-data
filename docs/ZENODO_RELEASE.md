@@ -3,7 +3,8 @@
 This project can be archived in Zenodo via the GitHub–Zenodo integration so that an exact, versioned release receives a citable DOI.
 
 ## Current DOI
-- Concept DOI: https://doi.org/10.5281/zenodo.18733931
+- Version DOI (v1.0.4): https://doi.org/10.5281/zenodo.18733963
+- Concept DOI (all versions): https://doi.org/10.5281/zenodo.18733930
 
 ## Recommended path (GitHub release → Zenodo DOI)
 1. Sign in to Zenodo and connect your GitHub account.
