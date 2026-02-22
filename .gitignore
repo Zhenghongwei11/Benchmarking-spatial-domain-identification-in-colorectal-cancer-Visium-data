@@ -1,0 +1,11 @@
+*.DS_Store
+.venv/
+data/raw/
+__pycache__/
+docs/submissions/
+*.docx
+
+# generated review-bundle artifacts
+docs/review_bundle/FILELIST.txt
+docs/review_bundle/CHECKSUMS.sha256
+docs/review_bundle/*.zip

@@ -1,0 +1,14 @@
+figure_id	panel_id	generating_script	anchor_tables	notes
+Fig1	Fig1A	scripts/make_publication_figures_v2.py	results/dataset_summary.tsv	Total samples vs BayesSpace-covered samples per cohort.
+Fig1	Fig1B	scripts/make_publication_figures_v2.py	results/figures/fig1_domain_maps.tsv	Representative baseline domain map (expression-only k-means), fixed K, one sample.
+Fig1	Fig1C	scripts/make_publication_figures_v2.py	results/figures/fig1_domain_maps.tsv	Representative baseline domain map (expression+coordinates k-means), fixed K, one sample.
+Fig1	Fig1D	scripts/make_publication_figures_v2.py	results/figures/fig1_domain_maps.tsv	Representative BayesSpace domain map, fixed K, one sample (exported via scripts/run_bayesspace_baseline.R domain-map option).
+Fig2	Fig2A	scripts/make_publication_figures_v2.py	results/replication/domain_quality_deltas_by_sample.tsv	Per-sample delta spatial coherence (BayesSpace - baseline) across K in {4,6}.
+Fig2	Fig2B	scripts/make_publication_figures_v2.py	results/replication/domain_quality_deltas_by_sample.tsv	Per-sample delta marker coherence (BayesSpace - baseline) across K in {4,6}.
+Fig2	Fig2C	scripts/make_publication_figures_v2.py	results/benchmarks/statistical_gate_summary.tsv	Claim-level paired effect sizes with bootstrap 95% CI and BH-FDR.
+Fig3	Fig3A	scripts/make_publication_figures_v2.py	results/replication/bayesspace_stability_by_sample.tsv	Multiseed stability by sample and K with prespecified threshold.
+Fig3	Fig3B	scripts/make_publication_figures_v2.py	results/benchmarks/statistical_gate_summary.tsv	Claim-level stability gate summary (median ARI with CI).
+Fig4	Fig4A	scripts/make_publication_figures_v2.py	results/benchmarks/runtime_memory.tsv;results/benchmarks/method_benchmark.tsv	Runtime distributions for baselines (runtime_memory) and BayesSpace (method_benchmark), with heterogeneity across runs.
+Fig4	Fig4B	scripts/make_publication_figures_v2.py	results/benchmarks/statistical_gate_summary.tsv	Scope-limited compute gate summary (median runtime with CI).
+FigS1	FigS1A	scripts/make_supplementary_figures.py	results/figures/figS1_domain_marker_heatmap.tsv;results/figures/fig1_domain_maps.tsv	Representative marker expression heatmap for the Figure 1 BayesSpace example.
+FigS2	FigS2A	scripts/make_supplementary_figures.py	docs/STATISTICAL_DECISION_RULES.md;results/dataset_summary.tsv;results/benchmarks/statistical_gate_summary.tsv	Workflow schematic summarizing cohort selection, preprocessing, domain calling, prespecified gates, and reporting artifacts.

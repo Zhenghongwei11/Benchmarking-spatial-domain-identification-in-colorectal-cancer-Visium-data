@@ -1,0 +1,6 @@
+source_data_label	internal_table_path	manuscript_usage	notes
+Source Data 1	results/benchmarks/method_benchmark.tsv	Fig2 benchmark summary	primary benchmark rows
+Source Data 2	results/benchmarks/bayesspace_rigor_backfill.tsv	Fig2R/Fig4R rigor panel	multiseed BayesSpace backfill
+Source Data 3	results/benchmarks/statistical_gate_summary.tsv	claim gate outcomes	overall_gate_status and support_tier
+Source Data 4	results/benchmarks/failure_log.tsv	compute reliability appendix	explicit runtime failures
+Source Data 5	results/dataset_summary.tsv	dataset coverage and scale	datasets used, sample counts, and BayesSpace coverage

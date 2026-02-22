@@ -1,0 +1,11 @@
+dataset_id	intended_role	modality	sample_size_declared	samples_on_disk	format_hint	samples_in_method_benchmark	methods_covered	bayesspace_samples_covered	bayesspace_rows	notes
+GSE267401	Primary (local pilot)	Visium (human CRC; FFPE; CytAssist)	4	4	mtx	4	BayesSpace,M0_expr_kmeans,M1_spatial_concat_kmeans,M2_spatial_ward	3	16	RAW.tar Content-Length 376023040 bytes
+GSE311294	Replication (local)	Visium (human CRC)	5	5	mtx	5	BayesSpace,M0_expr_kmeans,M1_spatial_concat_kmeans,M2_spatial_ward	3	13	RAW.tar Content-Length 194928640 bytes
+GSE285505	Replication (local)	Visium (human CRC)	4	4	h5	4	M0_expr_kmeans,M1_spatial_concat_kmeans	0	0	RAW.tar Content-Length 69109760 bytes
+GSE283052	Replication extension (local/cloud)	Visium (human CRC tumor tissues)	12	0	unknown	0		0	0	RAW.tar Content-Length 700508160 bytes
+GSE284061	Small sanity check / dev dataset	Visium (human CRC)	1	0	unknown	0		0	0	RAW.tar Content-Length 71403520 bytes
+GSE217414	Optional external replication	Visium (CRC metastasis context)	4	0	unknown	0		0	0	RAW.tar Content-Length 118589440 bytes
+GSE226997	Cloud-only stress test	Visium (human CRC; very large raw bundle)	4	0	unknown	0		0	0	RAW.tar Content-Length 44193679360 bytes
+GSE284989	Optional cross-species stress test	Visium (mouse MC38 tumors; immunotherapy context)	22	0	unknown	0		0	0	RAW.tar Content-Length 1154027520 bytes
+GSE312204	Optional scale-up (cloud preferred)	Visium (human colon; larger series)	20	0	unknown	0		0	0	RAW.tar Content-Length 5500815360 bytes
+GSE280311	Optional higher-res replication (cloud if needed)	Visium HD / Flex (human CRC + adjacent mucosa)	12	0	unknown	0		0	0	RAW.tar Content-Length 547788800 bytes

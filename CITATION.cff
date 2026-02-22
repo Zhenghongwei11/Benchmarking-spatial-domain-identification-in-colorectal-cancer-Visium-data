@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this software and dataset-derived tables, please cite the associated manuscript and this repository."
+title: "Benchmarking spatial domain identification in colorectal cancer Visium data"
+type: software
+authors:
+  - family-names: Zheng
+    given-names: Hongwei
+    affiliation: "School of Medicine, Quanzhou Medical College, Quanzhou, Fujian 362000, China"
+  - family-names: Chen
+    given-names: Wenbiao
+    affiliation: "School of Medicine, Quanzhou Medical College, Quanzhou, Fujian 362000, China"
+repository-code: "https://github.com/Zhenghongwei11/Benchmarking-spatial-domain-identification-in-colorectal-cancer-Visium-data"
+contact:
+  - family-names: Chen
+    given-names: Wenbiao
+    email: "2008001@qzmc.edu.cn"
+keywords:
+  - spatial transcriptomics
+  - colorectal cancer
+  - Visium
+  - benchmarking
+  - BayesSpace
