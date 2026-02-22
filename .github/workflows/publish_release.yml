@@ -1,0 +1,29 @@
+name: Publish release (bundle + checksums)
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build canonical review bundle
+        run: |
+          bash scripts/build_review_bundle.sh
+
+      - name: Create GitHub release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: |
+            docs/review_bundle/crc_spatial_benchmark_review_bundle.zip
+            docs/review_bundle/CHECKSUMS.sha256
+
