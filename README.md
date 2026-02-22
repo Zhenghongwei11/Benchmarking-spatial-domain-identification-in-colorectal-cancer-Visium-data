@@ -2,6 +2,8 @@
 
 This repository contains code and derived tables for a benchmark of spatial domain identification methods in colorectal cancer (CRC) 10x Genomics Visium datasets. The benchmark emphasizes pre-specified statistical decision criteria, stability auditing, and transparent reporting.
 
+Zenodo DOI (concept): https://doi.org/10.5281/zenodo.18733931
+
 ## Quick start (reproduce key tables)
 Prerequisites: Python (3.x) and R (with `Rscript`) available on PATH.
 
