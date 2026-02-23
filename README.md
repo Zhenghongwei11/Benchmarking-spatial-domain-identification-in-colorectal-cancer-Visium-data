@@ -1,6 +1,6 @@
 # Benchmarking spatial domain identification in CRC Visium data
 
-This repository contains code and derived tables for a benchmark of spatial domain identification methods in colorectal cancer (CRC) 10x Genomics Visium datasets. The benchmark emphasizes pre-specified statistical decision criteria, stability auditing, and transparent reporting.
+We benchmark spatial domain identification methods in colorectal cancer (CRC) 10x Genomics Visium spatial transcriptomics datasets and provide scripts plus derived tables to reproduce the key results. The benchmark emphasizes pre-specified statistical decision criteria, stability auditing, and transparent reporting.
 
 ## Why this study matters
 Spatial transcriptomics makes it possible to see how tumor cells, stroma, and immune compartments are organized in situ, but many downstream analyses depend on an upstream “spatial domain” map that is often chosen by eye. In colorectal cancer, domain boundaries can be gradual and mixed, so small analytic choices can change the apparent tissue structure. This project benchmarks a commonly used Bayesian spatial clustering method (BayesSpace) against simple baselines under fixed settings and reports quantitative evidence for domain quality and stability, with a focus on transparent, reproducible decision-making.
