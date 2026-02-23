@@ -5,9 +5,7 @@ Provide a single, clean reproducibility bundle suitable for peer review and publ
 
 ## Canonical bundle rule
 - There is exactly one canonical ZIP in this folder.
-- The journal ZIP and the GitHub release ZIP MUST be byte-identical (verified by checksums).
-- Public repository: https://github.com/Zhenghongwei11/Benchmarking-spatial-domain-identification-in-colorectal-cancer-Visium-data
-- Recommended release asset name: `crc_spatial_benchmark_review_bundle.zip` (paired with `CHECKSUMS.sha256`).
+- The journal ZIP and GitHub release ZIP should be identical (verified by checksums).
 
 ## Included (high level)
 - `scripts/`: analysis entrypoints and helper scripts

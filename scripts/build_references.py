@@ -21,15 +21,30 @@ from typing import Any
 
 DOI_RE = re.compile(r"^10\.\d{4,9}/\S+$")
 BIB_ENTRY_RE = re.compile(r"^@(\w+)\s*{\s*([^,]+)\s*,", flags=re.IGNORECASE)
+DOI_FIELD_RE = re.compile(r"\bDOI\s*=\s*{([^}]+)}", flags=re.IGNORECASE)
+OPENRXIV_PUBLISHER_FIELD_RE = re.compile(r",\s*publisher\s*=\s*{openRxiv}\s*,", flags=re.IGNORECASE)
+OPENRXIV_PUBLISHER_TRAILING_RE = re.compile(r",\s*publisher\s*=\s*{openRxiv}\s*}", flags=re.IGNORECASE)
 
 
 def utc_now_iso() -> str:
     return dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat()
 
 
-def read_tsv(path: Path) -> list[dict[str, str]]:
+def read_table(path: Path) -> list[dict[str, str]]:
+    delimiter = "\t"
+    if path.suffix.lower() == ".csv":
+        delimiter = ","
+    elif path.suffix.lower() == ".tsv":
+        delimiter = "\t"
+    else:
+        try:
+            sample = path.read_text(encoding="utf-8", errors="replace")[:4096]
+            delimiter = csv.Sniffer().sniff(sample).delimiter
+        except Exception:
+            delimiter = "\t"
+
     with path.open("r", encoding="utf-8", newline="") as handle:
-        reader = csv.DictReader(handle, delimiter="\t")
+        reader = csv.DictReader(handle, delimiter=delimiter)
         return [dict(r) for r in reader]
 
 
@@ -127,6 +142,24 @@ def rewrite_bibtex_key(bibtex: str, citekey: str) -> str:
     return BIB_ENTRY_RE.sub(f"@{entry_type}{{{citekey},", bibtex, count=1)
 
 
+def postprocess_bibtex_text(doi: str, bibtex: str) -> str:
+    bibtex = bibtex or ""
+    doi = (doi or "").strip()
+
+    # PLOS-style references expect a meaningful container title. Some preprint DOIs
+    # resolve with `publisher={openRxiv}` which reads as anachronistic and is not a
+    # standard venue label for 10.1101 preprints. Rewrite to `journal={bioRxiv}`.
+    if doi.startswith("10.1101/") and "openRxiv" in bibtex:
+        if re.search(r"\bjournal\s*=", bibtex, flags=re.IGNORECASE):
+            bibtex = OPENRXIV_PUBLISHER_FIELD_RE.sub(",", bibtex)
+            bibtex = OPENRXIV_PUBLISHER_TRAILING_RE.sub("}", bibtex)
+        else:
+            bibtex = OPENRXIV_PUBLISHER_FIELD_RE.sub(", journal={bioRxiv},", bibtex)
+            bibtex = OPENRXIV_PUBLISHER_TRAILING_RE.sub(", journal={bioRxiv}}", bibtex)
+
+    return bibtex
+
+
 def json_load_maybe(payload: bytes) -> dict[str, Any] | None:
     try:
         return json.loads(payload.decode("utf-8"))
@@ -146,11 +179,16 @@ def first_str(value: Any) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build references.bib from a DOI list and log verification.")
-    parser.add_argument("--doi-list", default="docs/references/doi_list.tsv")
+    parser.add_argument("--doi-list", default="docs/references/doi_list.csv")
     parser.add_argument("--out-bib", default="docs/references/references.bib")
     parser.add_argument("--out-verify", default="docs/CITATION_VERIFICATION.tsv")
     parser.add_argument("--cache-dir", default="docs/references/cache")
     parser.add_argument("--timeout-sec", type=float, default=20.0)
+    parser.add_argument(
+        "--probe-fulltext",
+        action="store_true",
+        help="Optionally probe an OA/fulltext URL for basic accessibility (slower; may be flaky).",
+    )
     args = parser.parse_args()
 
     repo_root = Path(__file__).resolve().parent.parent
@@ -159,14 +197,14 @@ def main() -> int:
     out_verify_path = repo_root / args.out_verify
     cache_dir = repo_root / args.cache_dir
 
-    rows = read_tsv(doi_list_path)
+    rows = read_table(doi_list_path)
     if not rows:
         raise SystemExit(f"Empty DOI list: {doi_list_path}")
 
     seen: set[str] = set()
     cleaned: list[dict[str, str]] = []
     for r in rows:
-        citekey = (r.get("citekey") or "").strip()
+        citekey = (r.get("citekey") or r.get("id") or r.get("key") or "").strip()
         doi = normalize_doi(r.get("doi") or "")
         notes = (r.get("notes") or "").strip()
         if not citekey or not doi:
@@ -192,8 +230,19 @@ def main() -> int:
 
         # --- BibTeX from doi.org
         bib_cache = cache_dir / f"{citekey}.bib"
+        use_cache = False
+        bibtex_payload = b""
         if bib_cache.exists():
             bibtex_payload = bib_cache.read_bytes()
+            try:
+                cached_text = bibtex_payload.decode("utf-8", errors="replace")
+                match = DOI_FIELD_RE.search(cached_text)
+                cached_doi = normalize_doi(match.group(1)) if match else ""
+                use_cache = bool(cached_doi and cached_doi == doi)
+            except Exception:
+                use_cache = False
+
+        if use_cache:
             bib_fetch = FetchResult(
                 ok=True,
                 status=200,
@@ -218,6 +267,7 @@ def main() -> int:
             try:
                 bibtex_text = bib_fetch.body.decode("utf-8", errors="replace")
                 bibtex_text = rewrite_bibtex_key(bibtex_text, citekey)
+                bibtex_text = postprocess_bibtex_text(doi, bibtex_text)
                 bibtex_ok = bibtex_text.lstrip().startswith("@")
             except Exception:
                 bibtex_ok = False
@@ -279,13 +329,15 @@ def main() -> int:
 
         fulltext_checked_url = oa_url or fulltext_url
         fulltext_accessible = ""
-        if fulltext_checked_url:
+        if fulltext_checked_url and args.probe_fulltext:
             probe = fetch_url(
                 fulltext_checked_url,
                 headers={"User-Agent": ua},
-                timeout_sec=min(args.timeout_sec, 15.0),
+                timeout_sec=min(args.timeout_sec, 10.0),
             )
             fulltext_accessible = "true" if probe.ok and (probe.status is None or probe.status < 400) else "false"
+        elif fulltext_checked_url:
+            fulltext_accessible = "skipped"
 
         title = crossref_title or openalex_title
         year = crossref_year or openalex_year

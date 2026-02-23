@@ -1,15 +1,4 @@
-# Reviewer guide (how to reproduce key numbers)
-
-## Repository (recommended)
-- Repository (HTTPS): https://github.com/Zhenghongwei11/Benchmarking-spatial-domain-identification-in-colorectal-cancer-Visium-data
-- Repository (SSH): `git@github.com:Zhenghongwei11/Benchmarking-spatial-domain-identification-in-colorectal-cancer-Visium-data.git`
-
-Clone (choose one):
-- `git clone https://github.com/Zhenghongwei11/Benchmarking-spatial-domain-identification-in-colorectal-cancer-Visium-data`
-- `git clone git@github.com:Zhenghongwei11/Benchmarking-spatial-domain-identification-in-colorectal-cancer-Visium-data.git`
-
-## Canonical reproducibility bundle (alternative)
-If you received `crc_spatial_benchmark_review_bundle.zip`, verify integrity using the provided `CHECKSUMS.sha256` manifest before running any commands.
+# Reproduce key numbers (minimal instructions)
 
 ## Minimal reproduction (tables)
 ### One-click (recommended)
@@ -22,7 +11,7 @@ Environment controls:
 
 ### Step-by-step (tables only)
 1. Ensure Python and R are available.
-2. Run the stages (baseline + BayesSpace where applicable):
+2. Run the local stages (baseline + BayesSpace where applicable):
    - `bash scripts/run_crc_stage2_local.sh`
    - `BAYES_INSTALL=1 bash scripts/run_crc_stage3_full_replication.sh`
    - `bash scripts/run_crc_stage3d_spatial_ward_baseline.sh`
@@ -35,16 +24,7 @@ Environment controls:
 3. Rebuild the claim-gate table:
    - `Rscript scripts/build_statistical_gate_summary.R`
 4. Rebuild derived artifacts:
-    - `python3 scripts/build_required_artifacts.py`
-
-## Regenerate figures (optional)
-To regenerate the publication figures after running the stages above:
-1. Install Python plotting dependencies:
-   - `python3 -m venv .venv && source .venv/bin/activate`
-   - `python -m pip install -r requirements.txt`
-2. Recreate figures:
-   - `python scripts/make_publication_figures_v2.py`
-   - `python scripts/make_supplementary_figures.py`
+   - `python3 scripts/build_required_artifacts.py`
 
 ## What to check
 - Claim gates: `results/benchmarks/statistical_gate_summary.tsv`
@@ -55,4 +35,3 @@ To regenerate the publication figures after running the stages above:
 ## Notes
 - Bayesian MCMC methods can be slow; long runtimes are expected and should be recorded in the benchmark tables.
 - The bundle intentionally excludes raw data; all datasets are public and can be downloaded from GEO.
-- If your environment pins SSH host keys, validate GitHub host keys via official GitHub documentation before trusting any fingerprint. (Record provided by the authors: `SHA256:qk4DtsWl/9BBnPK5csvpuHeooFvh/WTLJMBmFdpoBoA`.)

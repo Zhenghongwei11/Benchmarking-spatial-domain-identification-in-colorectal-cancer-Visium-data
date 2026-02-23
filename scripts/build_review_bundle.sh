@@ -33,8 +33,8 @@ Provide a single, clean reproducibility bundle suitable for peer review and publ
 Reviewers should see the science and the reproducibility artifacts, not internal spec tooling or submission packaging.
 MD
 
-cat > "${OUT_DIR}/REVIEWER_GUIDE.md" <<'MD'
-# Reviewer guide (how to reproduce key numbers)
+cat > "${OUT_DIR}/REPRODUCE.md" <<'MD'
+# Reproduce key numbers (minimal instructions)
 
 ## Minimal reproduction (tables)
 ### One-click (recommended)
@@ -90,12 +90,12 @@ include_docs_files = [
     root / "docs" / "STATISTICAL_DECISION_RULES.md",
     root / "docs" / "SOURCE_DATA_MAP.tsv",
     root / "docs" / "FIGURE_PROVENANCE.tsv",
+    root / "docs" / "DATA_MANIFEST.tsv",
 ]
 
 optional_dirs = []
 
 exclude_dir_prefixes = [
-    root / "openspec",
     root / "data",
     root / ".venv",
     root / "docs" / "submissions",

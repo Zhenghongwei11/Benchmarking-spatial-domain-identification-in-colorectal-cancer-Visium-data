@@ -5,6 +5,9 @@ __pycache__/
 docs/submissions/
 *.docx
 
+# reference-builder cache (rebuilt on demand)
+docs/references/cache/
+
 # generated review-bundle artifacts
 docs/review_bundle/FILELIST.txt
 docs/review_bundle/CHECKSUMS.sha256

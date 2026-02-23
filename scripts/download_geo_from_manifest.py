@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Download and unpack GEO RAW tar files declared in data/manifest.tsv."""
+"""Download and unpack GEO RAW tar files declared in docs/DATA_MANIFEST.tsv."""
 
 from __future__ import annotations
 
@@ -68,7 +68,7 @@ def unpack_tar(tar_path: pathlib.Path, output_dir: pathlib.Path) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--manifest", default="data/manifest.tsv")
+    parser.add_argument("--manifest", default="docs/DATA_MANIFEST.tsv")
     parser.add_argument("--dataset-id", default="GSE285505")
     parser.add_argument("--output-dir", default="data/raw")
     parser.add_argument("--force-download", action="store_true")
