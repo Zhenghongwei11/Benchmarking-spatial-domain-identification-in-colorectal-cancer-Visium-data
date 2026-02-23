@@ -6,8 +6,7 @@ This repository contains code and derived tables for a benchmark of spatial doma
 Spatial transcriptomics makes it possible to see how tumor cells, stroma, and immune compartments are organized in situ, but many downstream analyses depend on an upstream “spatial domain” map that is often chosen by eye. In colorectal cancer, domain boundaries can be gradual and mixed, so small analytic choices can change the apparent tissue structure. This project benchmarks a commonly used Bayesian spatial clustering method (BayesSpace) against simple baselines under fixed settings and reports quantitative evidence for domain quality and stability, with a focus on transparent, reproducible decision-making.
 
 Zenodo DOIs:
-- Archived release used for reporting (v1.0.4): https://doi.org/10.5281/zenodo.18733963
-- Concept DOI (all versions; resolves to latest): https://doi.org/10.5281/zenodo.18733930
+- Concept DOI (all versions; resolves to the latest archived release): https://doi.org/10.5281/zenodo.18733930
 
 ## Quick start (reproduce key tables)
 Prerequisites: Python (3.x) and R (with `Rscript`) available on PATH.
@@ -27,8 +26,6 @@ Then rebuild the claim-gate table and derived artifacts:
 - `Rscript scripts/build_statistical_gate_summary.R`
 - `python3 scripts/build_required_artifacts.py`
 
-See `docs/review_bundle/REPRODUCE.md` for details and expected outputs.
-
 ### One-click (end-to-end)
 To run the full pipeline (tables + figures) with a single command:
 - `bash scripts/reproduce_one_click.sh`
@@ -47,3 +44,6 @@ Public GEO accessions used in this benchmark:
 - GSE285505
 
 The download URLs and file sizes are recorded in `docs/DATA_MANIFEST.tsv`.
+
+## Integrity checks (optional)
+- Verify that figure anchor tables referenced in `docs/FIGURE_PROVENANCE.tsv` exist: `python3 scripts/validate_figure_provenance.py`
